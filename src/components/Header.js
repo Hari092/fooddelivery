@@ -1,30 +1,67 @@
-import { useState } from "react";
+
+import { Link } from "react-router-dom";
+import useOnlineStatus from "../utiles/useOnlineStatus";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCartShopping } from "@fortawesome/free-solid-svg-icons";
+import { useSelector } from "react-redux";
+import  {Auth}  from "./signInWithGoogle";
 
 const Header = () => {
-    const [loginBtn ,setLoginBtn] = useState("Login");
 
-    return (
-      <div className="header-container">
-        <div className="logo-container">
+
+  const status = useOnlineStatus();
+
+  const cartItems = useSelector((store) => store.cart.items);
+  console.log(cartItems);
+
+
+  return (
+    <div
+      className={`flex justify-between bg-orange-100 shadow-lg mb-3 md:flex md:flex-row md:justify-between`}
+    >
+      <div className="md:mb-0">
+        <Link to="/">
           <img
-            className="logo"
+            className="w-20 rounded-full m-3"
             src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSK4vZhk5VYEpE7qBYmuxv_3oKYnSLcThSdEw&usqp=CAU"
             alt="header-logo"
           />
-        </div>
-        <div className="nav-items">
-          <ul>
-            <li>Search</li>
-            <li>Offers</li>
-            <li>Help</li>
-            <li>Cart</li>
-            <li><button className="login-btn" onClick={()=>{
-              loginBtn==="Login" ? setLoginBtn("Logout") :setLoginBtn("Login");
-            }}>{loginBtn}</button></li>
-          </ul>
-        </div>
+        </Link>
       </div>
-    );
-  };
 
-  export default Header;
+      <nav className="">
+        <ul className="mt-6 p-4 m-4 font-semibold text-lg flex gap-5">
+          <li className="hidden md:block">
+            Online Status: {status ? "🟢" : ""}
+          </li>
+          <li className="mx-5 ">
+            <Link className="h-2 w-2 " to="/Cart">
+              <FontAwesomeIcon icon={faCartShopping} />{" "}
+              { (
+                <p className="absolute top-0 -ms-3 inline-block bg-orange-400 text-white w-max px-2 rounded-full h-max text-sm translate-y-8 ">
+                  <span className="cart-count"> {cartItems.length}</span>
+                </p>
+              )}
+            </Link>
+          </li>
+          <li className="hover:text-orange-400 hidden sm:block">
+            <Link className="Link" to="/about">
+              About Us
+            </Link>
+          </li>
+          <li className="hover:text-orange-400 hidden sm:block">
+            <Link className="Link" to="/contact">
+              Contact
+            </Link>
+          </li>
+          <li className="Link  hover:text-orange-400 hidden sm:block">Help</li>
+          <li>
+            <Auth />
+          </li>
+        </ul>
+      </nav>
+    </div>
+  );
+};
+
+export default Header;

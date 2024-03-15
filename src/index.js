@@ -4,19 +4,63 @@ import "./index.css";
 import reportWebVitals from "./reportWebVitals";
 import Header from "./components/Header";
 import Body from "./components/Body";
-
+import { createBrowserRouter, RouterProvider, Outlet } from "react-router-dom";
+import About from "./components/About";
+import Error from "./components/error";
+import Contact from "./components/Contact";
+import ResturantMenu from "./components/Menu";
+import { Provider } from "react-redux";
+import Store from "./utiles/appStore";
+import Cart from "./components/cart";
+import OderPlaced from "./components/Oderplaced";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
-
 const App = () => {
+ 
   return (
-    <div className="app">
-      <Header />
-      <Body />
-    </div>
+    <Provider store={Store}>
+      <div className="app">
+        <Header/>
+        <Outlet/>
+      </div>
+    </Provider>
   );
 };
 
-root.render(<App />);
+const appRouter = createBrowserRouter([
+  {
+    path: "/",
+    element: <App />,
+    children: [
+      {
+        path: "/",
+        element: <Body />,
+      },
+      {
+        path: "/cart",
+        element: <Cart />,
+      },
+      {
+        path: "/about",
+        element: <About />,
+      },
+      {
+        path: "/contact/",
+        element: <Contact />,
+      },
+      {
+        path: "/Resturants/:resId",
+        element: <ResturantMenu />,
+      },
+      {
+        path:"/Oderplaced",
+        element: <OderPlaced />,
+      }
+    ],
+    errorElement: <Error />,
+  },
+]);
+
+root.render(<RouterProvider router={appRouter} />);
 
 reportWebVitals();
