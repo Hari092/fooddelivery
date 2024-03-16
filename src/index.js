@@ -17,7 +17,7 @@ import OderPlaced from "./components/Oderplaced";
 const root = ReactDOM.createRoot(document.getElementById("root"));
 const App = () => {
  
-  return  return (window.innerWidth<1000) ?
+  return  return (window.innerWidth<800) ?
     (
       <div className="flex h-96 justify-center items-center">
         <h1 className="text-2xl font-bold text-orange-500">please view in destop mode</h1>
