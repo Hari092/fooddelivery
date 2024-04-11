@@ -4,4 +4,6 @@ export const menuApi=`https://www.swiggy.com/dapi/menu/pl?page-type=REGULAR_MENU
 
 export const mainApi =`https://www.swiggy.com/dapi/restaurants/list/v5?lat=12.89960&lng=80.22090&is-seo-homepage-enabled`;
 
+export const mainNumber="25"
+
 
